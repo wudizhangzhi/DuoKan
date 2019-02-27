@@ -251,6 +251,8 @@ class DuoKan(DuoKanBase):
         ret = self._get(url)
         # print(ret.text)
         root = etree.HTML(ret.text)
+        with open('test.html', 'wb') as f:
+            f.write(ret.content)
         lis = root.xpath('//ul[@class="j-list"]/li')
         return lis
 
@@ -302,10 +304,12 @@ if __name__ == "__main__":
     # duokan = DuoKan()
     # duokan.login('', '')
     # duokan.fetchBookInfo('b64829f41e6d11e2ad8a00163e0123ac')
-    book_id = 'b64829f41e6d11e2ad8a00163e0123ac'
+    book_id = '7e2a574ab76e478996e48609fd86bb2e'
     cookie = load_cookie('cookie.txt')
     duokan = DuoKan(cookie)
     # duokan.run()
-    ret = duokan.fetchPageContent(book_id, 10)
+    # ret = duokan.fetchPageContent(book_id, 10)
+    # ret = duokan.fetchMyBookList()
     # print(ret)
-    # print(duokan.fetchPageContent(book_id, 20))
+    ret = duokan.fetchPageContent(book_id, 42)
+    print(''.join([i[0] for i in ret]))
